@@ -4,7 +4,7 @@ class Calculator {
     this.subdisplay = elem.querySelector('.calc__display-sub');
     this.display = elem.querySelector('.calc__display-main');
 
-    this.equation = ['10'];
+    this.equation = ['0'];
     this.operators = ['add', 'sub', 'mul', 'div'];
 
     elem.addEventListener('click', (e) => this.handleEvent(e));
@@ -17,6 +17,24 @@ class Calculator {
     const value = btn.dataset.value;
     
     if (this.operators.includes(value)) this.addOperator(value);
+    if (!isNaN(+value)) this.addNumber(value);
+  }
+
+  addNumber(number) {
+    const lastElem = this.equation[this.equation.length - 1];
+    
+    // Check if last elem is an operator
+    if (this.operators.includes(lastElem)) {
+      this.equation.push(number.toString());
+    
+    // Check if last operand is equal to 0
+    } else if (lastElem === '0') {
+      this.equation[this.equation.length - 1] = number.toString();
+
+    // Add number to last elem
+    } else {
+      this.equation[this.equation.length - 1] = lastElem + number;
+    }
   }
 
   addOperator(operator) {
