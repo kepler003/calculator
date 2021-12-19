@@ -4,7 +4,8 @@ class Calculator {
     this.subdisplay = elem.querySelector('.calc__display-sub');
     this.display = elem.querySelector('.calc__display-main');
 
-    this.equation = ['10', '+', '1.5', '*', '2', '-', '100', '/', '10'];
+    this.equation = ['0'];
+    this.result = null;
     this.operators = ['+', '-', '*', '/'];
 
     elem.addEventListener('click', (e) => this.handleEvent(e));
@@ -19,9 +20,7 @@ class Calculator {
     if (this.operators.includes(value)) this.addOperator(value);
     if (!isNaN(+value))                 this.addNumber(value);
     if (value === '.')                  this.addDot();
-    if (value === 'res') this.calculate();
-
-    console.log(this.equation);
+    if (value === '=')                  this.calculate();
   }
 
   addNumber(number) {
@@ -69,7 +68,51 @@ class Calculator {
   }
 
   calculate() {
+    const arr = [...this.equation];
 
+    // multiply & divide
+    for (let i = 0; i < arr.length; i++) {
+
+      const operator = arr[i];
+      if (!['*', '/'].includes(operator)) continue;
+      
+      const a = +arr[i - 1];
+      const b = +arr[i + 1];
+
+      switch(operator) {
+        case '*':
+          arr.splice(i - 1, 3, a * b);
+          break;
+        case '/':
+          arr.splice(i - 1, 3, a / b);
+          break;
+      }
+
+      i = i - 2;
+    }
+
+    // add & subtract
+    for (let i = 0; i < arr.length; i++) {
+
+      const operator = arr[i];
+      if (!['+', '-'].includes(operator)) continue;
+      
+      const a = +arr[i - 1];
+      const b = +arr[i + 1];
+
+      switch(operator) {
+        case '+':
+          arr.splice(i - 1, 3, a + b);
+          break;
+        case '-':
+          arr.splice(i - 1, 3, a - b);
+          break;
+      }
+
+      i = i - 2;
+    }
+
+    this.result = arr[0];
   }
 }
 
