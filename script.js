@@ -4,8 +4,8 @@ class Calculator {
     this.subdisplay = elem.querySelector('.calc__display-sub');
     this.display = elem.querySelector('.calc__display-main');
 
-    this.equation = ['0'];
-    this.operators = ['add', 'sub', 'mul', 'div'];
+    this.equation = ['10', '+', '1.5', '*', '2', '-', '100', '/', '10'];
+    this.operators = ['+', '-', '*', '/'];
 
     elem.addEventListener('click', (e) => this.handleEvent(e));
   }
@@ -19,6 +19,9 @@ class Calculator {
     if (this.operators.includes(value)) this.addOperator(value);
     if (!isNaN(+value))                 this.addNumber(value);
     if (value === '.')                  this.addDot();
+    if (value === 'res') this.calculate();
+
+    console.log(this.equation);
   }
 
   addNumber(number) {
@@ -63,6 +66,10 @@ class Calculator {
     if (this.equation[this.equation.length - 1][this.equation[this.equation.length - 1].length - 1] === '.') return;
     
     this.equation.push(operator);
+  }
+
+  calculate() {
+
   }
 }
 
