@@ -17,10 +17,15 @@ class Calculator {
     
     const value = btn.dataset.value;
     
+    if (value === '=') {
+      this.calculate();
+    } else {
+      this.recalculate();
+    }
+
     if (this.operators.includes(value)) this.addOperator(value);
     if (!isNaN(+value))                 this.addNumber(value);
     if (value === '.')                  this.addDot();
-    if (value === '=')                  this.calculate();
 
     this.render();
   }
@@ -121,6 +126,13 @@ class Calculator {
     }
 
     this.result = arr[0];
+  }
+
+  recalculate() {
+    if (this.result !== null) {
+      this.equation = [this.result.toString()];
+      this.result = null;
+    }
   }
 
   render() {
