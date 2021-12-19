@@ -17,7 +17,8 @@ class Calculator {
     const value = btn.dataset.value;
     
     if (this.operators.includes(value)) this.addOperator(value);
-    if (!isNaN(+value)) this.addNumber(value);
+    if (!isNaN(+value))                 this.addNumber(value);
+    if (value === '.')                  this.addDot();
   }
 
   addNumber(number) {
@@ -35,6 +36,20 @@ class Calculator {
     } else {
       this.equation[this.equation.length - 1] = lastElem + number;
     }
+  }
+
+  addDot() {
+    const lastElem = this.equation[this.equation.length - 1];
+    // Check if equation is empty
+    if (!this.equation.length) return;
+
+    // Check if last element is an opertor
+    if (this.operators.includes(lastElem)) return;
+
+    // Check if last elem has a dot
+    if (lastElem.includes('.')) return;
+
+    this.equation[this.equation.length - 1] = lastElem + '.';
   }
 
   addOperator(operator) {
