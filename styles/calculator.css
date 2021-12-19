@@ -9,7 +9,7 @@
   padding: 1.6rem;
   background-color: #FFF;
   border-radius: 0.4rem;
-  box-shadow: 0 .5rem 2rem hsla(0, 0%, 0%, .2);
+  box-shadow: 0 .6rem 4rem hsla(0, 0%, 0%, .15);
 }
 
 .calc__display {
