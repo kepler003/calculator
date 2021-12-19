@@ -21,6 +21,8 @@ class Calculator {
     if (!isNaN(+value))                 this.addNumber(value);
     if (value === '.')                  this.addDot();
     if (value === '=')                  this.calculate();
+
+    this.render();
   }
 
   addNumber(number) {
@@ -38,6 +40,8 @@ class Calculator {
     } else {
       this.equation[this.equation.length - 1] = lastElem + number;
     }
+    
+    this.result = null;
   }
 
   addDot() {
@@ -52,6 +56,8 @@ class Calculator {
     if (lastElem.includes('.')) return;
 
     this.equation[this.equation.length - 1] = lastElem + '.';
+
+    this.result = null;
   }
 
   addOperator(operator) {
@@ -65,6 +71,8 @@ class Calculator {
     if (this.equation[this.equation.length - 1][this.equation[this.equation.length - 1].length - 1] === '.') return;
     
     this.equation.push(operator);
+
+    this.result = null;
   }
 
   calculate() {
@@ -113,6 +121,29 @@ class Calculator {
     }
 
     this.result = arr[0];
+  }
+
+  render() {
+    
+    let equation = this.equation.map(value => {
+
+      if (!['*', '/'].includes(value)) return value;
+
+      switch (value) {
+        case '*':
+          return '&times;';
+        case '/':
+          return '&divide;';
+      }
+    });
+
+    if (this.result !== null) {
+      this.display.innerHTML = this.result;
+      this.subdisplay.innerHTML = equation.join('') + '=';
+    } else {
+      this.display.innerHTML = equation.join('');
+      this.subdisplay.innerHTML = '';
+    }
   }
 }
 
