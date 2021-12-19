@@ -40,7 +40,9 @@
   color: hsla(0, 0%, 30%);
   font-size: 3.2rem;
 }
+
 .calc__btn {
+  cursor: pointer;
   padding: 1.6rem;
   font-size: 2rem;
   border: none;
