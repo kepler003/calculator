@@ -125,7 +125,7 @@ class Calculator {
       i = i - 2;
     }
 
-    this.result = arr[0];
+    this.result = Math.round(arr[0] * 1000000000000) / 1000000000000;
   }
 
   recalculate() {
