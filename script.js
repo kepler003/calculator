@@ -152,7 +152,7 @@ class Calculator {
 
   render() {
     
-    let equation = this.equation.map(value => {
+    const equation = this.equation.map(value => {
 
       if (!['*', '/'].includes(value)) return value;
 
@@ -164,12 +164,17 @@ class Calculator {
       }
     });
 
-    if (this.result !== null) {
-      this.display.innerHTML = this.result;
-      this.subdisplay.innerHTML = equation.join('') + '=';
+    if (this.equation) {
+      this.subdisplay.innerHTML = equation.join('');
+      if (this.result) this.subdisplay.innerHTML = this.subdisplay.innerHTML + '=';
+    }
+
+    if (this.result) {
+      this.display.textContent = this.result;
     } else {
-      this.display.innerHTML = equation.join('');
-      this.subdisplay.innerHTML = '';
+      const previousElem = equation[equation.length - 2];
+      const lastElem = equation[equation.length - 1];
+      this.display.textContent = isNaN(+lastElem) ? previousElem : lastElem;
     }
   }
 }
