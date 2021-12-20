@@ -153,9 +153,7 @@ class Calculator {
   render() {
     
     const equation = this.equation.map(value => {
-
       if (!['*', '/'].includes(value)) return value;
-
       switch (value) {
         case '*':
           return '&times;';
@@ -164,11 +162,15 @@ class Calculator {
       }
     });
 
+    // Render subdisplay
     if (this.equation) {
       this.subdisplay.innerHTML = equation.join('');
-      if (this.result) this.subdisplay.innerHTML = this.subdisplay.innerHTML + '=';
+      if (this.result) {
+        this.subdisplay.innerHTML = this.subdisplay.innerHTML + '=';
+      }
     }
 
+    // Render display
     if (this.result) {
       this.display.textContent = this.result;
     } else {
