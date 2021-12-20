@@ -89,6 +89,7 @@ class Calculator {
 
   calculate() {
 
+    
     // Check if result is given
     if (this.result) return;
     
@@ -97,9 +98,9 @@ class Calculator {
     
     // Check if last digit of last element is a dot
     if (this.equation[this.equation.length - 1][this.equation[this.equation.length - 1].length - 1] === '.') return;
-
+    
     const arr = [...this.equation];
-
+    
     // multiply & divide
     for (let i = 0; i < arr.length; i++) {
 
@@ -170,15 +171,13 @@ class Calculator {
     });
 
     // Render subdisplay
-    if (this.equation) {
-      this.subdisplay.innerHTML = equation.join('');
-      if (this.result) {
-        this.subdisplay.innerHTML = this.subdisplay.innerHTML + '=';
-      }
+    this.subdisplay.innerHTML = equation.join('');
+    if (this.result !== null) {
+      this.subdisplay.innerHTML = this.subdisplay.innerHTML + '=';
     }
 
     // Render display
-    if (this.result) {
+    if (this.result !== null) {
       this.display.textContent = this.result;
     } else {
       const previousElem = equation[equation.length - 2];
