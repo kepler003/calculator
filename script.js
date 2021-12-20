@@ -81,6 +81,16 @@ class Calculator {
   }
 
   calculate() {
+
+    // Check if result is given
+    if (this.result) return;
+    
+    // Check if last element is an operator
+    if (this.operators.includes(this.equation[this.equation.length - 1])) return;
+    
+    // Check if last digit of last element is a dot
+    if (this.equation[this.equation.length - 1][this.equation[this.equation.length - 1].length - 1] === '.') return;
+
     const arr = [...this.equation];
 
     // multiply & divide
@@ -125,7 +135,12 @@ class Calculator {
       i = i - 2;
     }
 
-    this.result = Math.round(arr[0] * 1000000000000) / 1000000000000;
+    this.result = arr[0];
+
+    // Shorten result if too many digits
+    if (this.result.toString().length > 11) {
+      this.result = this.result.toExponential(4);
+    }
   }
 
   recalculate() {
