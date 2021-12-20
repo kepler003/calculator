@@ -32,6 +32,9 @@ class Calculator {
 
   addNumber(number) {
     const lastElem = this.equation[this.equation.length - 1];
+
+    // Check if too many digits
+    if (lastElem.toString().length > 9) return;
     
     // Check if last elem is an operator
     if (this.operators.includes(lastElem)) {
@@ -51,6 +54,10 @@ class Calculator {
 
   addDot() {
     const lastElem = this.equation[this.equation.length - 1];
+
+    // Check if too many digits
+    if (lastElem.toString().length > 8) return;
+
     // Check if equation is empty
     if (!this.equation.length) return;
 
