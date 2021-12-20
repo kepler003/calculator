@@ -27,12 +27,16 @@
 
 .calc__display-sub {
   --padding: 0.8rem;
+  max-width: calc(100% - 2.4rem);
   padding: 0 var(--padding);
   background-color: #FFF;
   color: hsla(0, 0%, 30%, .5);
   font-size: 1.6rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
   position: absolute;
   top: 0;
+  right: 2.4rem;
   transform: translate(var(--padding), -50%);
 }
 
