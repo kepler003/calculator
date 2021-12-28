@@ -4,7 +4,7 @@ class Calculator {
     this.subdisplay = elem.querySelector('.calc__display-sub');
     this.display = elem.querySelector('.calc__display-main');
 
-    this.equation = ['12', '*', '100', '+', '1.99', '/', '2'];
+    this.equation = ['12', '*', '100', '+', '1.99', '/'];
     this.result = null;
 
     elem.addEventListener('click', (e) => this.handleEvent(e));
@@ -48,6 +48,7 @@ class Calculator {
 
   render() {
     this.renderSubdisplay();
+    this.renderDisplay();
   }
 
   renderSubdisplay() {
@@ -66,6 +67,20 @@ class Calculator {
     });
 
     this.subdisplay.innerHTML = equation.join('');
+  }
+
+  renderDisplay() {
+    if (this.result === null) {
+      
+      if (this.equation === null) {
+        this.display.innerHTML = 0;
+      } else {
+        this.display.innerHTML = [...this.equation].reverse().find(item => !isNaN(+item)); // Find & render last number in equation
+      }
+      
+    } else {
+      this.display.innerHTML = this.result;
+    }
   }
 }
 
