@@ -47,10 +47,14 @@ class Calculator {
   }
 
   render() {
-    this.renderEquation();
+    this.renderSubdisplay();
   }
 
-  renderEquation() {
+  renderSubdisplay() {
+    // Check if equation is empty
+    if (this.equation === null) return;
+
+    // Change multiplying and division operators
     const equation = this.equation.map(item => {
       if (item === '*') {
         return '&times;';
