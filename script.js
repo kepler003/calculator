@@ -4,7 +4,7 @@ class Calculator {
     this.subdisplay = elem.querySelector('.calc__display-sub');
     this.display = elem.querySelector('.calc__display-main');
 
-    this.equation = null;
+    this.equation = ['12', '*', '100', '+', '1.99', '/', '2'];
     this.result = null;
 
     elem.addEventListener('click', (e) => this.handleEvent(e));
@@ -22,6 +22,8 @@ class Calculator {
     if (value === '.') this.addDot();
     if (value === 'C') this.clearCalculator();
     if (value === '=') this.calculate();
+
+    this.render();
   }
 
   addNumber(num) {
@@ -42,6 +44,24 @@ class Calculator {
 
   calculate() {
     console.log('CALCULATE');
+  }
+
+  render() {
+    this.renderEquation();
+  }
+
+  renderEquation() {
+    const equation = this.equation.map(item => {
+      if (item === '*') {
+        return '&times;';
+      } else if (item === '/') {
+        return '&divide;';
+      } else {
+        return item;
+      }
+    });
+
+    this.subdisplay.innerHTML = equation.join('');
   }
 }
 
