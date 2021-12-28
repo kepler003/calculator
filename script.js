@@ -53,20 +53,22 @@ class Calculator {
 
   renderSubdisplay() {
     // Check if equation is empty
-    if (this.equation === null) return;
-
-    // Change multiplying and division operators
-    const equation = this.equation.map(item => {
-      if (item === '*') {
-        return '&times;';
-      } else if (item === '/') {
-        return '&divide;';
-      } else {
-        return item;
-      }
-    });
-
-    this.subdisplay.innerHTML = equation.join('');
+    if (this.equation === null) {
+      this.subdisplay.innerHTML = '';
+    } else {
+      // Change multiplying and division operators
+      const equation = this.equation.map(item => {
+        if (item === '*') {
+          return '&times;';
+        } else if (item === '/') {
+          return '&divide;';
+        } else {
+          return item;
+        }
+      });
+  
+      this.subdisplay.innerHTML = equation.join('');
+    }
   }
 
   renderDisplay() {
