@@ -4,10 +4,12 @@ class Calculator {
     this.subdisplay = elem.querySelector('.calc__display-sub');
     this.display = elem.querySelector('.calc__display-main');
 
-    this.equation = ['12', '*', '100', '+', '1.99', '/'];
+    this.equation = null;
     this.result = null;
 
     elem.addEventListener('click', (e) => this.handleEvent(e));
+
+    this.render();
   }
 
   handleEvent(e) {
@@ -27,7 +29,29 @@ class Calculator {
   }
 
   addNumber(num) {
-    console.log('num: ', num);
+    const lastOperand = this.equation?.[this.equation.length - 1] || null;
+
+    // Check if last num has more than 9 digits
+    if (lastOperand?.length > 9) return;
+
+    switch (lastOperand) {
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+        this.equation.push(num);
+        break;
+      case '0':
+        if (num === '0') return;
+        this.equation[this.equation.length - 1] = num;
+        break;
+      case null:
+        this.equation = [num];
+        break;
+      default:
+        this.equation[this.equation.length - 1] += num;
+        break;
+    }
   }
 
   addOperator(operator) {
