@@ -215,6 +215,8 @@ class Calculator {
   }
 
   stripNumber(num) {
+    if (!num.includes('.')) return num;
+
     for (let i = 0; i < num.length; i++) {
       const char = num[num.length - 1 - i];
       
