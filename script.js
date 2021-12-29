@@ -63,6 +63,9 @@ class Calculator {
     
     // Check if last elem ends with a dot
     if (lastOperand.endsWith('.')) return;
+
+    // Strip last elem
+    this.equation[this.equation.length - 1] = this.stripNumber(lastOperand);
     
     switch (lastOperand) {
       case '+':
@@ -110,6 +113,9 @@ class Calculator {
     if (['+', '-', '*', '/'].includes(this.equation[this.equation.length - 1])) {
       this.equation.pop();
     }
+
+    // Strip last elem
+    this.equation[this.equation.length - 1] = this.stripNumber(this.equation[this.equation.length - 1]);
 
     const equation = [...this.equation];
 
@@ -216,7 +222,7 @@ class Calculator {
 
   stripNumber(num) {
     if (!num.includes('.')) return num;
-
+    
     for (let i = 0; i < num.length; i++) {
       const char = num[num.length - 1 - i];
       
