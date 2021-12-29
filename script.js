@@ -20,6 +20,9 @@ class Calculator {
     if (target.tagName !== 'BUTTON') return;
     if (!value) return;
 
+    if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+         '+', '-', '*', '/', '.'].includes(value)) this.recalculate();
+
     if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(value)) this.addNumber(value);
     if (['+', '-', '*', '/'].includes(value)) this.addOperator(value);
     if (value === '.') this.addDot();
@@ -175,6 +178,13 @@ class Calculator {
     
     // Assign result & deal with loosing floating point precision
     this.result = +(+equation[0]).toPrecision(12);
+  }
+
+  recalculate() {
+    if (this.equation !== null && this.result !== null) {
+      this.equation = [this.result.toString()];
+      this.result = null;
+    }
   }
 
   clearCalculator() {
