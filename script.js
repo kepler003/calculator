@@ -4,7 +4,7 @@ class Calculator {
     this.subdisplay = elem.querySelector('.calc__display-sub');
     this.display = elem.querySelector('.calc__display-main');
 
-    this.equation = null;
+    this.equation = ['5', '+', '10.5', '*', '2', '*', '5', '-', '16.10', '*', '2'];
     this.result = null;
 
     elem.addEventListener('click', (e) => this.handleEvent(e));
@@ -101,12 +101,87 @@ class Calculator {
     }
   }
 
-  clearCalculator() {
-    console.log('CLEAR');
+  calculate() {
+    const equation = [...this.equation];
+
+    // Check if equation is empty
+    if (equation === null) return;
+
+    // Check if equation ends with an operator
+    if (['+', '-', '*', '/'].includes(equation[equation.length - 1])) {
+      equation.pop();
+    }
+    
+    // Remove last zeros & decimal point if not needed
+    if (equation[equation.length - 1].includes('.')) {
+      equation[equation.length - 1] = (+equation[equation.length - 1]).toString();
+    }
+
+    // Check if equation ends with a dot
+    if (equation[equation.length - 1].endsWith('.')) {
+      equation[equation.length - 1] = equation[equation.length - 1].slice(0, -1);
+    }
+
+    // Multiply & divide
+    for (let i = 0; i < equation.length; i++) {
+      if (!['*', '/'].includes(equation[i])) continue;
+
+      const a = +equation[i - 1];
+      const b = +equation[i + 1];
+
+      switch (equation[i]) {
+        case '*':
+          equation.splice(
+            i - 1,
+            3,
+            (a * b).toString()
+          );
+          break;
+        case '/':
+          equation.splice(
+            i - 1,
+            3,
+            (a / b).toString()
+          );
+          break;
+      }
+
+      i--;
+    }
+
+    // Add & subtract
+    for (let i = 0; i < equation.length; i++) {
+      if (!['+', '-'].includes(equation[i])) continue;
+
+      const a = +equation[i - 1];
+      const b = +equation[i + 1];
+
+      switch (equation[i]) {
+        case '+':
+          equation.splice(
+            i - 1,
+            3,
+            (a + b).toString()
+          );
+          break;
+        case '-':
+          equation.splice(
+            i - 1,
+            3,
+            (a - b).toString()
+          );
+          break;
+      }
+
+      i--;
+    }
+    
+    // Assign result
+    this.result = equation[0];
   }
 
-  calculate() {
-    console.log('CALCULATE');
+  clearCalculator() {
+    console.log('CLEAR');
   }
 
   render() {
