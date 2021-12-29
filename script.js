@@ -4,7 +4,8 @@ class Calculator {
     this.subdisplay = elem.querySelector('.calc__display-sub');
     this.display = elem.querySelector('.calc__display-main');
 
-    this.equation = ['5', '+', '10.5', '*', '2', '*', '5', '-', '16.10', '*', '2'];
+    // this.equation = ['5', '+', '10.5', '*', '2', '*', '5', '-', '16.111', '*'];
+    this.equation = null;
     this.result = null;
 
     elem.addEventListener('click', (e) => this.handleEvent(e));
@@ -102,25 +103,15 @@ class Calculator {
   }
 
   calculate() {
-    const equation = [...this.equation];
-
     // Check if equation is empty
-    if (equation === null) return;
+    if (this.equation === null) return;
 
     // Check if equation ends with an operator
-    if (['+', '-', '*', '/'].includes(equation[equation.length - 1])) {
-      equation.pop();
-    }
-    
-    // Remove last zeros & decimal point if not needed
-    if (equation[equation.length - 1].includes('.')) {
-      equation[equation.length - 1] = (+equation[equation.length - 1]).toString();
+    if (['+', '-', '*', '/'].includes(this.equation[this.equation.length - 1])) {
+      this.equation.pop();
     }
 
-    // Check if equation ends with a dot
-    if (equation[equation.length - 1].endsWith('.')) {
-      equation[equation.length - 1] = equation[equation.length - 1].slice(0, -1);
-    }
+    const equation = [...this.equation];
 
     // Multiply & divide
     for (let i = 0; i < equation.length; i++) {
@@ -176,8 +167,8 @@ class Calculator {
       i--;
     }
     
-    // Assign result
-    this.result = equation[0];
+    // Assign result & deal with loosing floating point precision
+    this.result = +(+equation[0]).toPrecision(12);
   }
 
   clearCalculator() {
