@@ -4,7 +4,7 @@ class Calculator {
     this.subdisplay = elem.querySelector('.calc__display-sub');
     this.display = elem.querySelector('.calc__display-main');
 
-    this.equation = null;
+    this.equation = ['10', '+'];
     this.result = null;
 
     elem.addEventListener('click', (e) => this.handleEvent(e));
@@ -28,7 +28,7 @@ class Calculator {
     this.render();
   }
 
-  addNumber(num) {
+  addNumber(num = '0') {
     const lastOperand = this.equation?.[this.equation.length - 1] || null;
 
     // Check if last num has more than 9 digits
@@ -54,8 +54,26 @@ class Calculator {
     }
   }
 
-  addOperator(operator) {
-    console.log('operator: ', operator);
+  addOperator(operator = '+') {
+    const lastOperand = this.equation?.[this.equation.length - 1];
+
+    // Check if equation is empty
+    if (this.equation === null) return;
+    
+    // Check if last elem ends with a dot
+    if (lastOperand.endsWith('.')) return;
+    
+    switch (lastOperand) {
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+        this.equation[this.equation.length - 1] = operator;
+        break;
+      default:
+        this.equation.push(operator);
+        break;
+    }
   }
 
   addDot() {
