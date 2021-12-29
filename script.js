@@ -204,6 +204,10 @@ class Calculator {
   
       this.subdisplay.innerHTML = equation.join('');
     }
+
+    if (this.result !== null) {
+      this.subdisplay.innerHTML += '=';
+    }
   }
 
   renderDisplay() {
