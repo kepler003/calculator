@@ -4,7 +4,7 @@ class Calculator {
     this.subdisplay = elem.querySelector('.calc__display-sub');
     this.display = elem.querySelector('.calc__display-main');
 
-    this.equation = ['10', '+'];
+    this.equation = null;
     this.result = null;
 
     elem.addEventListener('click', (e) => this.handleEvent(e));
@@ -77,7 +77,28 @@ class Calculator {
   }
 
   addDot() {
-    console.log('dot: .');
+    const lastOperand = this.equation?.[this.equation.length - 1] || null;
+
+    // Check if too many digits
+    if (lastOperand?.length > 8) return;
+
+    // Check if last equation element has a decimal point
+    if (lastOperand?.includes('.')) return;
+    
+    switch (lastOperand) {
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+        this.equation.push('0.');
+        break;
+      case null:
+        this.equation = ['0.'];
+        break;
+      default:
+        this.equation[this.equation.length - 1] += '.';
+        break;
+    }
   }
 
   clearCalculator() {
