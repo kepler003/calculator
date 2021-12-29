@@ -213,6 +213,24 @@ class Calculator {
       this.display.innerHTML = this.result;
     }
   }
+
+  stripNumber(num) {
+    for (let i = 0; i < num.length; i++) {
+      const char = num[num.length - 1 - i];
+      
+      switch (char) {
+        case '0':
+          num = num.slice(0, -1);
+          i--;
+          break;
+        case '.':
+          num = num.slice(0, -1);
+          return num;
+        default:
+          return num;
+      }  
+    }
+  }
 }
 
 new Calculator(document.querySelector('.calc'));
