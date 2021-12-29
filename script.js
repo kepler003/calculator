@@ -188,7 +188,8 @@ class Calculator {
   }
 
   clearCalculator() {
-    console.log('CLEAR');
+    this.equation = null;
+    this.result = null;
   }
 
   render() {
