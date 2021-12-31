@@ -43,7 +43,11 @@ class Calculator {
       case '-':
       case '*':
       case '/':
-        this.equation.push(num);
+        if (this.equation.length === 1 && lastOperand === '-') {
+          this.equation[this.equation.length - 1] += num;
+        } else {
+          this.equation.push(num);
+        }
         break;
       case '0':
         if (num === '0') return;
@@ -62,24 +66,28 @@ class Calculator {
     const lastOperand = this.equation?.[this.equation.length - 1];
 
     // Check if equation is empty
-    if (this.equation === null) return;
-    
-    // Check if last elem ends with a dot
-    if (lastOperand.endsWith('.')) return;
+    if (this.equation !== null) {
 
-    // Strip last elem
-    this.equation[this.equation.length - 1] = this.stripNumber(lastOperand);
-    
-    switch (lastOperand) {
-      case '+':
-      case '-':
-      case '*':
-      case '/':
-        this.equation[this.equation.length - 1] = operator;
-        break;
-      default:
-        this.equation.push(operator);
-        break;
+      // Check if last elem ends with a dot
+      if (lastOperand.endsWith('.')) return;
+  
+      // Strip last elem
+      this.equation[this.equation.length - 1] = this.stripNumber(lastOperand);
+      
+      switch (lastOperand) {
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+          this.equation[this.equation.length - 1] = operator;
+          break;
+        default:
+          this.equation.push(operator);
+          break;
+      }
+
+    } else if (this.equation === null && operator === '-') {
+      this.equation = ['-'];
     }
   }
 
@@ -227,7 +235,11 @@ class Calculator {
       if (this.equation === null) {
         this.display.innerHTML = 0;
       } else {
-        this.display.innerHTML = [...this.equation].reverse().find(item => !isNaN(+item)); // Find & render last number in equation
+
+         // Find & render last number in equation
+        this.display.innerHTML = [...this.equation].reverse().find(item => {
+          return !isNaN(+item) || item === '-';
+        });
       }
       
     } else {
