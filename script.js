@@ -89,7 +89,9 @@ class Calculator {
       if (lastOperand.endsWith('.')) return;
   
       // Strip last elem
-      this.equation[this.equation.length - 1] = Number.parseFloat(lastOperand).toString();
+      if (!['+', '-', '*', '/'].includes(lastOperand)) {
+        this.equation[this.equation.length - 1] = Number.parseFloat(lastOperand).toString();
+      }
       
       switch (lastOperand) {
         case '+':
@@ -136,6 +138,11 @@ class Calculator {
   calculate() {
     // Check if equation is empty
     if (this.equation === null) return;
+
+    // Check if the only elem is a minus char
+    if (this.equation.length === 1 && this.equation[this.equation.length - 1] === '-') {
+      this.equation = ['0'];
+    }
 
     // Check if equation ends with an operator
     if (['+', '-', '*', '/'].includes(this.equation[this.equation.length - 1])) {
