@@ -5,7 +5,7 @@ class Calculator {
     this.display = elem.querySelector('.calc__display-main');
 
     // this.equation = ['5', '+', '10.5', '*', '2', '*', '5', '-', '16.111', '*'];
-    this.equation = null;
+    this.equation = ['10', '+', '5'];
     this.result = null;
 
     elem.addEventListener('click', (e) => this.handleEvent(e));
@@ -27,6 +27,7 @@ class Calculator {
     if (['+', '-', '*', '/'].includes(value)) this.addOperator(value);
     if (value === '.') this.addDot();
     if (value === 'C') this.clearCalculator();
+    if (value === 'D') this.removeLastChar();
     if (value === '=') this.calculate();
 
     this.render();
@@ -197,6 +198,21 @@ class Calculator {
 
   clearCalculator() {
     this.equation = null;
+    this.result = null;
+  }
+
+  removeLastChar() {
+    const lastOperand = this.equation?.[this.equation.length - 1] || null;
+    
+    if (this.equation === null) return;
+
+    if (lastOperand.length > 1) {
+      this.equation[this.equation.length - 1] = this.equation[this.equation.length - 1].slice(0, -1);
+    } else {
+      this.equation.pop();
+      if (this.equation.length === 0) this.equation = null;
+    }
+
     this.result = null;
   }
 
