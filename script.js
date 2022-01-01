@@ -278,11 +278,9 @@ class Calculator {
       if (this.equation === null) {
         this.display.innerHTML = 0;
       } else {
-
-         // Find & render last number in equation
-        this.display.innerHTML = [...this.equation].reverse().find(item => {
-          return !isNaN(+item) || item === '-';
-        });
+        // Find & render last number in equation
+        const lastItem = [...this.equation].reverse().find(item => !isNaN(+item)) || 0;
+        this.display.innerHTML = lastItem;
       }
       
     } else {
