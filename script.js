@@ -73,7 +73,7 @@ class Calculator {
       if (lastOperand.endsWith('.')) return;
   
       // Strip last elem
-      this.equation[this.equation.length - 1] = this.stripNumber(lastOperand);
+      this.equation[this.equation.length - 1] = Number.parseFloat(lastOperand).toString();
       
       switch (lastOperand) {
         case '+':
@@ -127,7 +127,7 @@ class Calculator {
     }
 
     // Strip last elem
-    this.equation[this.equation.length - 1] = this.stripNumber(this.equation[this.equation.length - 1]);
+    this.equation[this.equation.length - 1] = Number.parseFloat(this.equation[this.equation.length - 1]).toString();
 
     const equation = [...this.equation];
 
@@ -260,26 +260,6 @@ class Calculator {
       
     } else {
       this.display.innerHTML = this.result;
-    }
-  }
-
-  stripNumber(num) {
-    if (!num.includes('.')) return num;
-    
-    for (let i = 0; i < num.length; i++) {
-      const char = num[num.length - 1 - i];
-      
-      switch (char) {
-        case '0':
-          num = num.slice(0, -1);
-          i--;
-          break;
-        case '.':
-          num = num.slice(0, -1);
-          return num;
-        default:
-          return num;
-      }  
     }
   }
 }
