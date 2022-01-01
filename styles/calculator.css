@@ -63,7 +63,7 @@
 }
 
 .calc__btn--res {
-  grid-area: 3 / 4 / 7 / 5;
+  grid-area: 4 / 4 / 7 / 5;
   background-color: hsl(236, 100%, 78%);
   color: #FFF;
 }
