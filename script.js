@@ -8,6 +8,7 @@ class Calculator {
     this.result = null;
 
     elem.addEventListener('click', (e) => this.handleClickEvent(e));
+    window.addEventListener('keydown', (e) => this.handleKeyDownEvent(e));
 
     this.render();
   }
@@ -28,6 +29,22 @@ class Calculator {
     if (value === 'C') this.clearCalculator();
     if (value === 'D') this.removeLastChar();
     if (value === '=') this.calculate();
+
+    this.render();
+  }
+
+  handleKeyDownEvent(e) {
+    const value = e.key;
+
+    if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+         '+', '-', '*', '/', '.'].includes(value)) this.recalculate();
+
+    if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(value)) this.addNumber(value);
+    if (['+', '-', '*', '/'].includes(value)) this.addOperator(value);
+    if (value === '.') this.addDot();
+    if (value === 'Delete') this.clearCalculator();
+    if (value === 'Backspace') this.removeLastChar();
+    if (value === 'Enter') this.calculate();
 
     this.render();
   }
