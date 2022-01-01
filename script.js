@@ -7,7 +7,7 @@ class Calculator {
     this.equation = null;
     this.result = null;
 
-    elem.addEventListener('click', (e) => this.handleClickEvent(e));
+    elem.addEventListener('click', (e) =>     this.handleClickEvent(e));
     window.addEventListener('keydown', (e) => this.handleKeyDownEvent(e));
 
     this.render();
@@ -41,7 +41,7 @@ class Calculator {
 
     if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(value)) this.addNumber(value);
     if (['+', '-', '*', '/'].includes(value)) this.addOperator(value);
-    if (value === '.' || value === ',') this.addDot();
+    if (['.', ','].includes(value)) this.addDot();
     if (value === 'Delete') this.clearCalculator();
     if (value === 'Backspace') this.removeLastChar();
     if (value === 'Enter') this.calculate();
@@ -49,18 +49,18 @@ class Calculator {
     this.render();
   }
 
-  addNumber(num = '0') {
-    const lastOperand = this.equation?.[this.equation.length - 1] || null;
+  addNumber(num) {
+    const lastItem = this.equation?.[this.equation.length - 1] || null;
 
     // Check if last num has more than 9 digits
-    if (lastOperand?.length > 9) return;
+    if (lastItem?.length > 9) return;
 
-    switch (lastOperand) {
+    switch (lastItem) {
       case '+':
       case '-':
       case '*':
       case '/':
-        if (this.equation.length === 1 && lastOperand === '-') {
+        if (this.equation.length === 1 && lastItem === '-') {
           this.equation[this.equation.length - 1] += num;
         } else {
           this.equation.push(num);
@@ -79,24 +79,25 @@ class Calculator {
     }
   }
 
-  addOperator(operator = '+') {
-    const lastOperand = this.equation?.[this.equation.length - 1];
+  addOperator(operator) {
+    const lastItem = this.equation?.[this.equation.length - 1];
 
     // Check if equation is empty
     if (this.equation !== null) {
 
       // Check if last elem ends with a dot
-      if (lastOperand.endsWith('.')) return;
+      if (lastItem.endsWith('.')) return;
   
       // Strip last elem
-      if (!['+', '-', '*', '/'].includes(lastOperand)) {
-        this.equation[this.equation.length - 1] = Number.parseFloat(lastOperand).toString();
+      if (!['+', '-', '*', '/'].includes(lastItem)) {
+        this.equation[this.equation.length - 1] = Number.parseFloat(lastItem).toString();
       }
       
-      if (lastOperand === '-' && this.equation.length === 1) {  // Toggle minus
+      // Check if minus is the only char in an equation
+      if (lastItem === '-' && this.equation.length === 1) {
         this.equation = null;
-      } else {                                                  // Add / change operators
-        switch (lastOperand) {
+      } else {
+        switch (lastItem) {
           case '+':
           case '-':
           case '*':
@@ -115,15 +116,15 @@ class Calculator {
   }
 
   addDot() {
-    const lastOperand = this.equation?.[this.equation.length - 1] || null;
+    const lastItem = this.equation?.[this.equation.length - 1] || null;
 
     // Check if too many digits
-    if (lastOperand?.length > 8) return;
+    if (lastItem?.length > 8) return;
 
     // Check if last equation element has a decimal point
-    if (lastOperand?.includes('.')) return;
+    if (lastItem?.includes('.')) return;
     
-    switch (lastOperand) {
+    switch (lastItem) {
       case '+':
       case '-':
       case '*':
@@ -218,7 +219,6 @@ class Calculator {
 
   recalculate() {
     if (this.equation !== null && this.result !== null) {
-      console.log(this.result);
       this.equation = [this.result.toString()];
       this.result = null;
     }
@@ -230,11 +230,11 @@ class Calculator {
   }
 
   removeLastChar() {
-    const lastOperand = this.equation?.[this.equation.length - 1] || null;
+    const lastItem = this.equation?.[this.equation.length - 1] || null;
     
     if (this.equation === null) return;
 
-    if (lastOperand.length > 1) {
+    if (lastItem.length > 1) {
       this.equation[this.equation.length - 1] = this.equation[this.equation.length - 1].slice(0, -1);
     } else {
       this.equation.pop();
@@ -250,11 +250,10 @@ class Calculator {
   }
 
   renderSubdisplay() {
-    // Check if equation is empty
+
     if (this.equation === null) {
       this.subdisplay.innerHTML = '';
     } else {
-      // Change multiplying and division operators
       const equation = this.equation.map(item => {
         if (item === '*') {
           return '&times;';
@@ -279,7 +278,7 @@ class Calculator {
       if (this.equation === null) {
         this.display.innerHTML = 0;
       } else {
-        // Find & render last number in equation
+        // Find last number in equation
         const lastItem = [...this.equation].reverse().find(item => !isNaN(+item)) || 0;
         this.display.innerHTML = (lastItem.length <= 10) ? lastItem : Number.parseFloat((+lastItem).toPrecision(4));
       }
