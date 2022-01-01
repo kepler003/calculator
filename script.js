@@ -4,16 +4,15 @@ class Calculator {
     this.subdisplay = elem.querySelector('.calc__display-sub');
     this.display = elem.querySelector('.calc__display-main');
 
-    // this.equation = ['5', '+', '10.5', '*', '2', '*', '5', '-', '16.111', '*'];
-    this.equation = ['10', '+', '5'];
+    this.equation = null;
     this.result = null;
 
-    elem.addEventListener('click', (e) => this.handleEvent(e));
+    elem.addEventListener('click', (e) => this.handleClickEvent(e));
 
     this.render();
   }
 
-  handleEvent(e) {
+  handleClickEvent(e) {
     const target = e.target;
     const value = target.dataset.value;
 
