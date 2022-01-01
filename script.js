@@ -93,19 +93,23 @@ class Calculator {
         this.equation[this.equation.length - 1] = Number.parseFloat(lastOperand).toString();
       }
       
-      switch (lastOperand) {
-        case '+':
-        case '-':
-        case '*':
-        case '/':
-          this.equation[this.equation.length - 1] = operator;
-          break;
-        default:
-          this.equation.push(operator);
-          break;
+      if (lastOperand === '-' && this.equation.length === 1) {  // Toggle minus
+        this.equation = null;
+      } else {                                                  // Add / change operators
+        switch (lastOperand) {
+          case '+':
+          case '-':
+          case '*':
+          case '/':
+            this.equation[this.equation.length - 1] = operator;
+            break;
+          default:
+            this.equation.push(operator);
+            break;
+        }
       }
 
-    } else if (this.equation === null && operator === '-') {
+    } else if (operator === '-') {
       this.equation = ['-'];
     }
   }
