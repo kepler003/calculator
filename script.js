@@ -153,7 +153,7 @@ class Calculator {
       this.equation.pop();
     }
 
-    // Strip last elem
+    // Strip last number
     this.equation[this.equation.length - 1] = Number.parseFloat(this.equation[this.equation.length - 1]).toString();
 
     const equation = [...this.equation];
@@ -218,6 +218,7 @@ class Calculator {
 
   recalculate() {
     if (this.equation !== null && this.result !== null) {
+      console.log(this.result);
       this.equation = [this.result.toString()];
       this.result = null;
     }
@@ -280,11 +281,11 @@ class Calculator {
       } else {
         // Find & render last number in equation
         const lastItem = [...this.equation].reverse().find(item => !isNaN(+item)) || 0;
-        this.display.innerHTML = lastItem;
+        this.display.innerHTML = (lastItem.length <= 10) ? lastItem : Number.parseFloat((+lastItem).toPrecision(4));
       }
       
     } else {
-      this.display.innerHTML = this.result;
+      this.display.innerHTML = (this.result.toString().length <= 10) ? this.result : Number.parseFloat((+this.result).toPrecision(4));
     }
   }
 }
