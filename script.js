@@ -41,7 +41,7 @@ class Calculator {
 
     if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(value)) this.addNumber(value);
     if (['+', '-', '*', '/'].includes(value)) this.addOperator(value);
-    if (value === '.') this.addDot();
+    if (value === '.' || value === ',') this.addDot();
     if (value === 'Delete') this.clearCalculator();
     if (value === 'Backspace') this.removeLastChar();
     if (value === 'Enter') this.calculate();
