@@ -273,26 +273,28 @@ class Calculator {
   }
 
   renderDisplay() {
-    if (this.result === null) {
-      
-      if (this.equation === null) {
-        this.display.innerHTML = 0;
-      } else {
-        // Find last number in equation
-        const lastItem = [...this.equation].reverse().find(item => !isNaN(+item)) || 0;
-        this.display.innerHTML = (lastItem.length <= 10) ? lastItem : Number.parseFloat((+lastItem).toPrecision(4));
-      }
-      
+    let result;
+
+    if (this.result === null && this.equation === null) {
+      result = 0;
+    } else if (this.result === null && this.equation !== null) {
+      const lastItem = [...this.equation].reverse().find(item => !isNaN(+item)) || 0; // Find last number in equation
+      result = (lastItem.length <= 10) ? lastItem : Number.parseFloat((+lastItem).toPrecision(4));
     } else {
-      this.display.innerHTML = (this.result.toString().length <= 10) ? this.result : Number.parseFloat((+this.result).toPrecision(4));
+      result = (this.result.toString().length <= 10) ? this.result : Number.parseFloat((+this.result).toPrecision(4));
     }
+
+    this.display.innerHTML = this.convertNumberForDisplay(result.toString());
   }
 
   convertNumberForDisplay(num) {
+
     let result;
     const [pre, post] = num.split('.');
 
-    if (pre.length > 10) {
+    if (num.length <= 10) {
+      result = num;
+    } else if (pre.length > 10) {
       result = (+pre).toExponential(5);
       result = result.length <= 10 ? result : (+num).toExponential(5 - (result.length - 10));
     } else if (pre !== '0') {
