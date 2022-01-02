@@ -287,6 +287,26 @@ class Calculator {
       this.display.innerHTML = (this.result.toString().length <= 10) ? this.result : Number.parseFloat((+this.result).toPrecision(4));
     }
   }
+
+  convertNumberForDisplay(num) {
+    let result;
+    const [pre, post] = num.split('.');
+
+    if (pre.length > 10) {
+      result = (+pre).toExponential(5);
+      result = result.length <= 10 ? result : (+num).toExponential(5 - (result.length - 10));
+    } else if (pre !== '0') {
+      result = pre + '.';
+      result += Math.round((+post) / 10 ** (10 - result.length));
+    } else if (post[0] !== '0') {
+      result = (+num).toFixed(8);
+    } else {
+      result = (+num).toExponential(5);
+      result = result.length <= 10 ? result : (+num).toExponential(5 - (result.length - 10));
+    }
+
+    return result;
+  }
 }
 
 new Calculator(document.querySelector('.calc'));
